@@ -2,7 +2,7 @@
   <div id="nav" class="container-fluid">
     <nav class="navbar navbar-expand-md navbar-light shadow-sm">
         <div class="container-fluid">
-              <img onclick="window.location.href='/'"  class="navbar-brand" src="../public/images/logo.png">
+              <img onclick="window.location.href='/'"  class="navbar-brand" src="../public/images/shuttle-logo.png">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span><i class="fas fa-bars"></i></span>
             </button>
@@ -28,16 +28,37 @@
     </nav>
   </div>
   <router-view/>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="api-data">
+          <h3 class="pr-4 pl-5 pt-3 text-left">User List</h3>
+            <ul v-for="post in users" :key="post.id" id="user-list" class="text-left d-flex my-4 border"> 
+                <!-- <li><a v-bind:href="'/user/'+posts.id" class="border p-2">{{posts.name}}</a></li> -->
+                <li><router-link :to="'/user/'+post.id" class="nav-link">{{post.id}} - {{post.name}}</router-link></li>
+                <!-- <li><router-link :to="{name: 'User', params: {id: +post.id}}" class="nav-link">{{post.name}}</router-link></li> -->
+            </ul>
+        </div>
+      </div>
+    </div>
+</div>
 </template>
 
 <script>
 import axios from 'axios'
+import UserAPI from "./config/UserAPI.js"
 
 export default {
   data() {
     return {
-      todos: null, 
+      todos: null,
+      users: [] 
     }
+  },
+  mounted() {
+    UserAPI.index().then(function (response) {
+      this.users  = response.data;
+    }.bind(this));
   },
   created: async function () {
     this.loading = true;
@@ -80,7 +101,7 @@ export default {
 #nav {
   padding: 0;
   // padding: 30px;
-  img {cursor: pointer; width: 40px; margin-right: 10%;}
+  img {cursor: pointer; width: 10%; margin-right: 10%;}
   a {
     font-weight: bold;
     color: #2c3e50;

@@ -21,7 +21,7 @@
       <div class="col-md-6">
         <div class="api-data">
           <h3 class="pr-4 pl-5 pt-3 text-left">User List</h3>
-            <ul v-for="post in posts" :key="post.id" id="user-list" class="text-left d-flex my-4 border"> 
+            <ul v-for="post in users" :key="post.id" id="user-list" class="text-left d-flex my-4 border"> 
                 <!-- <li><a v-bind:href="'/user/'+posts.id" class="border p-2">{{posts.name}}</a></li> -->
                 <li><router-link :to="'/user/'+post.id" class="nav-link">{{post.id}} - {{post.name}}</router-link></li>
                 <!-- <li><router-link :to="{name: 'User', params: {id: +post.id}}" class="nav-link">{{post.name}}</router-link></li> -->
@@ -34,35 +34,40 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
 import TodoInput from '@/components/todos/TodoInput.vue'
 import ListItem from '@/components/todos/ListItem.vue'
+import UserAPI from "@/config/UserAPI.js"
 
 export default {
   name: 'Home',
   data() {
     return {
-      posts:null,
-      itemList: []
+      itemList: [],
+      users: []
     }
+  },
+  mounted() {
+    UserAPI.index().then(function (response) {
+      this.users  = response.data;
+    }.bind(this));
   },
   components: {
     TodoInput,
     ListItem
   },
-  created: async function () {
-    this.loading = true;
-    await axios.get("https://jsonplaceholder.typicode.com/users")
-    .then(res => {
-      this.loading = false,
-      this.posts = res.data;
-    })
+  // created: async function () {
+  //   this.loading = true;
+  //   await axios.get("https://jsonplaceholder.typicode.com/users")
+  //   .then(res => {
+  //     this.loading = false,
+  //     this.posts = res.data;
+  //   })
 
-    .catch( err => {
-      this.loading = false;
-      this.error = err;
-    })
-  },
+  //   .catch( err => {
+  //     this.loading = false;
+  //     this.error = err;
+  //   })
+  // },
   methods: {
 
     onAddNewTask(taskName){

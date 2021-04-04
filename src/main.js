@@ -6,13 +6,6 @@ import router from './router'
 import 'bootstrap'
 import jQuery from 'jquery'
 import "../public/styles/sass/main.scss"
-import "./config/api.js"
-
-// Vue.prototype.$http = Axios;
-// const token = localStorage.getItem('token');
-// if (token) {
-//   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-// }
 
 window.$ = window.jQuery = jQuery
 
