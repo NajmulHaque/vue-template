@@ -1,7 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import Vue from 'vue'
-import Vuex from 'vuex'
 import router from './router'
 import 'bootstrap'
 import jQuery from 'jquery'
@@ -12,4 +10,5 @@ window.$ = window.jQuery = jQuery
 import 'popper.js'
 import './assets/app.scss'
 
-createApp(App).use(router).mount('#app')
+const app = createApp(App).use(store);
+app.use(router, store).mount('#app')

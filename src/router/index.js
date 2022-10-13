@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import authentication from "../middleware/authentication"
 import About from '../views/About.vue'
 import Contact from '../views/Contact.vue'
 import Login from '../views/Login.vue'
@@ -18,7 +19,8 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     // component: () => import('../views/Contact.vue')
-    component: Contact
+    component: Contact,
+    // meta: { middleware: [authentication],}
   },
   {
     path:'/login',
